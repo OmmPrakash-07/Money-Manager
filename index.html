@@ -28,21 +28,23 @@
 
     <input type="text" id="searchInput" placeholder="Search by Description..." oninput="filterExpenses()">
 
-    <h3>Expense History 📋</h3>
-    <div id="expenseContent">
-        <table id="expenseTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date & Time</th>
-                    <th>Description</th>
-                    <th>Spent</th>
-                    <th>Remaining</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div id="exportContent">
+        <h3>Expense History 📋</h3>
+        <div id="expenseContent">
+            <table id="expenseTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="pdf-hide">Date & Time</th>
+                        <th>Description</th>
+                        <th>Spent</th>
+                        <th>Remaining</th>
+                        <th class="pdf-hide">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 
     <button id="exportPdfBtn">Export PDF</button>
@@ -59,6 +61,17 @@
         <h3>Add More Money</h3>
         <input type="number" id="modalAddMoneyInput" placeholder="Enter Amount">
         <button id="modalAddMoneyBtn">Add Money</button>
+    </div>
+</div>
+
+<!-- Edit Expense Modal -->
+<div id="editExpenseModal" class="modal">
+    <div class="modal-content">
+        <span class="edit-close-btn">&times;</span>
+        <h3>Edit Expense</h3>
+        <input type="text" id="editDescriptionInput" placeholder="Edit Description">
+        <input type="number" id="editSpentInput" placeholder="Edit Spend Amount">
+        <button id="saveEditBtn">Save Changes</button>
     </div>
 </div>
 

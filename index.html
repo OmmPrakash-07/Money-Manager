@@ -10,6 +10,7 @@
 <body>
 
 <div class="container">
+
     <div class="theme-toggle">
         <label class="switch">
             <input type="checkbox" id="themeSwitcher">
@@ -19,18 +20,24 @@
 
     <h2>Money Manager 💰</h2>
 
+    <!-- Total Money Input -->
     <input type="number" id="totalMoney" placeholder="Enter Total Money">
-    <input type="number" id="spendMoney" placeholder="Enter Spend Amount">
-    <input type="text" id="description" placeholder="Enter Description (e.g., Food)">
-    <button id="addBtn">Add Expense</button>
+
+    <!-- Expense Entry -->
+    <div class="expense-entry">
+        <input type="number" id="spendMoney" placeholder="Enter Spend Amount">
+        <input type="text" id="description" placeholder="Enter Description (e.g., Food)">
+        <button id="addBtn">Add Expense</button>
+    </div>
 
     <div class="result" id="resultText">Remaining Money: ₹0</div>
 
     <input type="text" id="searchInput" placeholder="Search by Description..." oninput="filterExpenses()">
 
+    <!-- Expense History Table -->
     <div id="exportContent">
         <h3>Expense History 📋</h3>
-        <div id="expenseContent">
+        <div class="table-wrapper">
             <table id="expenseTable">
                 <thead>
                     <tr>
@@ -47,11 +54,12 @@
         </div>
     </div>
 
-    <button id="exportPdfBtn">Export PDF</button>
-    <button id="resetBtn">Reset</button>
+    <div class="button-group">
+        <button id="exportPdfBtn">Export PDF</button>
+        <button id="resetBtn">Reset</button>
+    </div>
 </div>
 
-<!-- Floating Add Money Button -->
 <button id="addMoneyIcon" class="fab">+</button>
 
 <!-- Add Money Modal -->

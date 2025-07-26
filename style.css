@@ -1,3 +1,4 @@
+/* --- Base Styles --- */
 body {
     font-family: 'Poppins', sans-serif;
     background: #F4F7FA;
@@ -7,6 +8,7 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
+/* --- Container --- */
 .container {
     background: #ffffff;
     padding: 30px;
@@ -14,24 +16,23 @@ body {
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
     margin: 40px auto;
     max-width: 500px;
-    animation: slideIn 0.4s ease-out;
 }
 
+/* --- Headers --- */
 h2 {
-    color: #111827;
-    font-weight: 700;
     text-align: center;
     font-size: 28px;
-    margin-bottom: 10px;
+    font-weight: 700;
 }
 
 h3 {
-    color: #10B981;
-    font-weight: 600;
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 20px;
+    color: #10B981;
+    margin-top: 25px;
 }
 
+/* --- Inputs & Buttons --- */
 input, button {
     font-family: inherit;
     padding: 14px;
@@ -54,30 +55,39 @@ button {
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.3s;
 }
 
 button:hover {
-    transform: translateY(-2px);
     opacity: 0.95;
 }
 
+/* --- Result Text --- */
 .result {
     font-size: 1.4em;
     font-weight: 600;
-    margin: 20px 0;
     text-align: center;
+    margin-top: 20px;
     color: #16A34A;
+}
+
+/* --- Table Styling --- */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+    border-radius: 15px;
+    background: #F9FAFB;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 10px;
 }
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+    background: white;
     border-radius: 12px;
     overflow: hidden;
-    background: #F9FAFB;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 th {
@@ -101,9 +111,7 @@ tr:hover {
     font-size: 0.85em;
     border-radius: 6px;
     cursor: pointer;
-    border: none;
     margin: 0 3px;
-    transition: background 0.3s;
 }
 
 .edit-btn {
@@ -116,10 +124,10 @@ tr:hover {
     color: white;
 }
 
+/* --- Theme Toggle --- */
 .theme-toggle {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
 }
 
 .switch {
@@ -159,6 +167,7 @@ input:checked + .slider:before {
     transform: translateX(20px);
 }
 
+/* --- Floating Add Button --- */
 .fab {
     position: fixed;
     bottom: 25px;
@@ -171,14 +180,9 @@ input:checked + .slider:before {
     border-radius: 50%;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     cursor: pointer;
-    border: none;
-    transition: transform 0.3s;
 }
 
-.fab:hover {
-    transform: scale(1.1);
-}
-
+/* --- Modal Styles --- */
 .modal {
     display: none;
     position: fixed;
@@ -186,7 +190,6 @@ input:checked + .slider:before {
     left: 0; top: 0;
     width: 100%; height: 100%;
     background-color: rgba(0,0,0,0.5);
-    animation: fadeIn 0.3s ease forwards;
 }
 
 .modal-content {
@@ -198,13 +201,20 @@ input:checked + .slider:before {
     max-width: 350px;
     text-align: center;
     box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    animation: slideIn 0.3s ease forwards;
 }
 
 .close-btn, .edit-close-btn {
     float: right;
     font-size: 24px;
     cursor: pointer;
+}
+
+/* --- Buttons Group --- */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
 }
 
 body.dark {
@@ -239,12 +249,59 @@ body.dark .modal-content {
     color: #F9FAFB;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 20px auto;
+    }
 
-@keyframes slideIn {
-    from { transform: translateY(-30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    h2 {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    input, button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .result {
+        font-size: 1.2em;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fab {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 500px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 40% auto;
+        padding: 20px;
+    }
+
+    .close-btn, .edit-close-btn {
+        font-size: 20px;
+    }
 }

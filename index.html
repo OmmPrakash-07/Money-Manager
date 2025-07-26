@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="theme-toggle">
+        <label class="switch">
+            <input type="checkbox" id="themeSwitcher">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <h2>Money Manager 💰</h2>
+
+    <input type="number" id="totalMoney" placeholder="Enter Total Money">
+    <input type="number" id="spendMoney" placeholder="Enter Spend Amount">
+    <input type="text" id="description" placeholder="Enter Description (e.g., Food)">
+    <button id="addBtn">Add Expense</button>
+
+    <div class="result" id="resultText">Remaining Money: ₹0</div>
+
+    <input type="text" id="searchInput" placeholder="Search by Description..." oninput="filterExpenses()">
+
+    <h3>Expense History 📋</h3>
+    <div id="expenseContent">
+        <table id="expenseTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date & Time</th>
+                    <th>Description</th>
+                    <th>Spent</th>
+                    <th>Remaining</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <button id="exportPdfBtn">Export PDF</button>
+    <button id="resetBtn">Reset</button>
+</div>
+
+<!-- Floating Add Money Button -->
+<button id="addMoneyIcon" class="fab">+</button>
+
+<!-- Add Money Modal -->
+<div id="addMoneyModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Add More Money</h3>
+        <input type="number" id="modalAddMoneyInput" placeholder="Enter Amount">
+        <button id="modalAddMoneyBtn">Add Money</button>
+    </div>
+</div>
+
+<script src="html2pdf.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

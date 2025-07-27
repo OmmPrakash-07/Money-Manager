@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Money Manager</title>
@@ -7,83 +8,104 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <div class="theme-toggle">
-        <label class="switch">
-            <input type="checkbox" id="themeSwitcher">
-            <span class="slider"></span>
-        </label>
-    </div>
+        <!-- Theme Switcher -->
+        <div class="theme-toggle">
+            <label class="switch">
+                <input type="checkbox" id="themeSwitcher">
+                <span class="slider"></span>
+            </label>
+        </div>
 
-    <h2>Money Manager 💰</h2>
+        <h2>Money Manager 💰</h2>
 
-    <!-- Total Money Input -->
-    <input type="number" id="totalMoney" placeholder="Enter Total Money">
+        <!-- Total Money Input -->
+        <input type="number" id="totalMoney" placeholder="Enter Total Money">
 
-    <!-- Expense Entry -->
-    <div class="expense-entry">
-        <input type="number" id="spendMoney" placeholder="Enter Spend Amount">
-        <input type="text" id="description" placeholder="Enter Description (e.g., Food)">
-        <button id="addBtn">Add Expense</button>
-    </div>
+        <!-- Expense Entry Section -->
+        <div class="expense-entry">
+            <input type="number" id="spendMoney" placeholder="Enter Spend Amount">
+            <input type="text" id="description" placeholder="Enter Description (e.g., Food)">
+            <button id="addBtn">Add Expense</button>
+        </div>
 
-    <div class="result" id="resultText">Remaining Money: ₹0</div>
+        <!-- Dashboard Stats Cards -->
+        <div class="stats">
+            <div class="stat-card stat-total">
+                <div class="stat-label">Total Money</div>
+                <div class="stat-value" id="totalMoneyText">₹0</div>
+            </div>
+            <div class="stat-card stat-remaining">
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value" id="resultText">₹0</div>
+            </div>
+            <div class="stat-card stat-spent">
+                <div class="stat-label">Total Spent</div>
+                <div class="stat-value" id="totalSpentText">₹0</div>
+            </div>
+        </div>
 
-    <input type="text" id="searchInput" placeholder="Search by Description..." oninput="filterExpenses()">
+        <!-- Search Filter -->
+        <input type="text" id="searchInput" placeholder="Search by Description...">
 
-    <!-- Expense History Table -->
-    <div id="exportContent">
-        <h3>Expense History 📋</h3>
-        <div class="table-wrapper">
-            <table id="expenseTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th class="pdf-hide">Date & Time</th>
-                        <th>Description</th>
-                        <th>Spent</th>
-                        <th>Remaining</th>
-                        <th class="pdf-hide">Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <!-- Expense History Table -->
+        <div id="exportContent">
+            <h3>Expense History 📋</h3>
+            <div class="table-wrapper">
+                <table id="expenseTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="pdf-hide">Date & Time</th>
+                            <th>Description</th>
+                            <th>Spent</th>
+                            <th>Remaining</th>
+                            <th class="pdf-hide">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Buttons Group -->
+        <div class="button-group">
+            <button id="exportPdfBtn">Export PDF</button>
+            <button id="resetBtn">Reset</button>
         </div>
     </div>
 
-    <div class="button-group">
-        <button id="exportPdfBtn">Export PDF</button>
-        <button id="resetBtn">Reset</button>
+    <!-- Floating Add Money Button -->
+    <button id="addMoneyIcon" class="fab">+</button>
+
+    <!-- Add Money Modal -->
+    <div id="addMoneyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Add More Money</h3>
+            <input type="number" id="modalAddMoneyInput" placeholder="Enter Amount">
+            <button id="modalAddMoneyBtn">Add Money</button>
+        </div>
     </div>
-</div>
 
-<button id="addMoneyIcon" class="fab">+</button>
-
-<!-- Add Money Modal -->
-<div id="addMoneyModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h3>Add More Money</h3>
-        <input type="number" id="modalAddMoneyInput" placeholder="Enter Amount">
-        <button id="modalAddMoneyBtn">Add Money</button>
+    <!-- Edit Expense Modal -->
+    <div id="editExpenseModal" class="modal">
+        <div class="modal-content">
+            <span class="edit-close-btn">&times;</span>
+            <h3>Edit Expense</h3>
+            <input type="text" id="editDescriptionInput" placeholder="Edit Description">
+            <input type="number" id="editSpentInput" placeholder="Edit Spend Amount">
+            <button id="saveEditBtn">Save Changes</button>
+        </div>
     </div>
-</div>
 
-<!-- Edit Expense Modal -->
-<div id="editExpenseModal" class="modal">
-    <div class="modal-content">
-        <span class="edit-close-btn">&times;</span>
-        <h3>Edit Expense</h3>
-        <input type="text" id="editDescriptionInput" placeholder="Edit Description">
-        <input type="number" id="editSpentInput" placeholder="Edit Spend Amount">
-        <button id="saveEditBtn">Save Changes</button>
-    </div>
-</div>
-
-<script src="html2pdf.bundle.min.js"></script>
-<script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

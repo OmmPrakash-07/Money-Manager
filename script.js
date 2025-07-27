@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const descriptionInput = document.getElementById("description");
     const addBtn = document.getElementById("addBtn");
     const resultText = document.getElementById("resultText");
+    const totalSpentText = document.getElementById("totalSpentText");
+    const totalMoneyText = document.getElementById("totalMoneyText");
     const expenseTableBody = document.querySelector("#expenseTable tbody");
     const searchInput = document.getElementById("searchInput");
     const exportPdfBtn = document.getElementById("exportPdfBtn");
@@ -47,8 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalMoney = savedData.totalMoney;
         remainingMoney = savedData.remainingMoney;
         expenses = savedData.expenses;
-        updateExpenseTable();
-        updateRemainingMoney();
+        updateAllDisplays();
     }
 
     function saveToLocalStorage() {
@@ -58,6 +59,45 @@ document.addEventListener('DOMContentLoaded', () => {
             expenses
         };
         localStorage.setItem('moneyManagerData', JSON.stringify(data));
+    }
+
+    function updateRemainingMoney() {
+        resultText.textContent = `Remaining Money: ₹${remainingMoney}`;
+    }
+
+    function updateTotalSpent() {
+        const totalSpent = expenses.reduce((sum, expense) => sum + expense.spent, 0);
+        totalSpentText.textContent = `Total Spent: ₹${totalSpent}`;
+    }
+
+    function updateTotalMoney() {
+        totalMoneyText.textContent = `Total Money: ₹${totalMoney}`;
+    }
+
+    function updateAllDisplays() {
+        updateExpenseTable();
+        updateRemainingMoney();
+        updateTotalSpent();
+        updateTotalMoney();
+    }
+
+    function updateExpenseTable() {
+        expenseTableBody.innerHTML = "";
+        expenses.forEach((expense, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td class="pdf-hide">${expense.date}</td>
+                <td>${expense.description}</td>
+                <td>₹${expense.spent}</td>
+                <td>₹${expense.remaining}</td>
+                <td class="pdf-hide">
+                    <button class="action-btn edit-btn" onclick="editExpense(${index})">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteExpense(${index})">Delete</button>
+                </td>
+            `;
+            expenseTableBody.appendChild(row);
+        });
     }
 
     addBtn.addEventListener("click", () => {
@@ -83,8 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             remaining: remainingMoney
         });
 
-        updateExpenseTable();
-        updateRemainingMoney();
+        updateAllDisplays();
         saveToLocalStorage();
 
         spendMoneyInput.value = "";
@@ -92,40 +131,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     totalMoneyInput.addEventListener("change", () => {
-        totalMoney = parseFloat(totalMoneyInput.value);
-        remainingMoney = totalMoney;
-        updateRemainingMoney();
+        const inputAmount = parseFloat(totalMoneyInput.value);
+        if (isNaN(inputAmount) || inputAmount <= 0) {
+            alert("Please enter a valid total money amount.");
+            return;
+        }
+
+        totalMoney = inputAmount;
+        const totalSpent = expenses.reduce((sum, exp) => sum + exp.spent, 0);
+        remainingMoney = totalMoney - totalSpent;
+        updateAllDisplays();
         saveToLocalStorage();
     });
-
-    function updateRemainingMoney() {
-        resultText.textContent = `Remaining Money: ₹${remainingMoney}`;
-    }
-
-    function updateExpenseTable() {
-        expenseTableBody.innerHTML = "";
-        expenses.forEach((expense, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${index + 1}</td>
-                <td class="pdf-hide">${expense.date}</td>
-                <td>${expense.description}</td>
-                <td>₹${expense.spent}</td>
-                <td>₹${expense.remaining}</td>
-                <td class="pdf-hide">
-                    <button class="action-btn edit-btn" onclick="editExpense(${index})">Edit</button>
-                    <button class="action-btn delete-btn" onclick="deleteExpense(${index})">Delete</button>
-                </td>
-            `;
-            expenseTableBody.appendChild(row);
-        });
-    }
 
     window.deleteExpense = (index) => {
         remainingMoney += expenses[index].spent;
         expenses.splice(index, 1);
-        updateExpenseTable();
-        updateRemainingMoney();
+        updateAllDisplays();
         saveToLocalStorage();
     };
 
@@ -144,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveEditBtn.addEventListener("click", () => {
         const newDescription = editDescriptionInput.value.trim();
         const newSpent = parseFloat(editSpentInput.value);
+
         if (!newDescription || isNaN(newSpent) || newSpent <= 0) {
             alert("Please enter valid description and amount.");
             return;
@@ -170,13 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        updateExpenseTable();
-        updateRemainingMoney();
+        updateAllDisplays();
         editExpenseModal.style.display = "none";
         saveToLocalStorage();
     });
 
-    window.filterExpenses = () => {
+    searchInput.addEventListener("input", () => {
         const filter = searchInput.value.toLowerCase();
         const rows = expenseTableBody.getElementsByTagName("tr");
 
@@ -187,11 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.style.display = textValue.toLowerCase().includes(filter) ? "" : "none";
             }
         });
-    };
+    });
 
     exportPdfBtn.addEventListener("click", () => {
         const elementsToHide = document.querySelectorAll(
-            "h2, #totalMoney, #spendMoney, #description, #addBtn, #resultText, #searchInput, #exportPdfBtn, #resetBtn, #addMoneyIcon"
+            "h2, #totalMoney, #spendMoney, #description, #addBtn, .stats, #searchInput, #exportPdfBtn, #resetBtn, #addMoneyIcon"
         );
         const pdfHideElements = document.querySelectorAll(".pdf-hide");
 
@@ -218,8 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalMoney = 0;
             remainingMoney = 0;
             expenses = [];
-            updateExpenseTable();
-            updateRemainingMoney();
+            updateAllDisplays();
         }
     });
 
@@ -236,9 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isNaN(addAmount) && addAmount > 0) {
             totalMoney += addAmount;
             remainingMoney += addAmount;
-            updateRemainingMoney();
             modalAddMoneyInput.value = "";
             addMoneyModal.style.display = "none";
+            updateAllDisplays();
             saveToLocalStorage();
         } else {
             alert("Enter a valid amount!");

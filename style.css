@@ -32,6 +32,53 @@ h3 {
     margin-top: 25px;
 }
 
+/* --- Stats Cards --- */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.stat-card {
+    flex: 1 1 calc(33% - 10px);
+    background: #F9FAFB;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* --- Specific Stat Colors --- */
+.stat-total {
+    border-top: 4px solid #3B82F6;
+}
+
+.stat-remaining {
+    border-top: 4px solid #10B981;
+}
+
+.stat-spent {
+    border-top: 4px solid #EF4444;
+}
+
 /* --- Inputs & Buttons --- */
 input, button {
     font-family: inherit;
@@ -59,15 +106,6 @@ button {
 
 button:hover {
     opacity: 0.95;
-}
-
-/* --- Result Text --- */
-.result {
-    font-size: 1.4em;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 20px;
-    color: #16A34A;
 }
 
 /* --- Table Styling --- */
@@ -106,6 +144,7 @@ tr:hover {
     background-color: rgba(16, 185, 129, 0.1);
 }
 
+/* --- Action Buttons --- */
 .action-btn {
     padding: 6px 14px;
     font-size: 0.85em;
@@ -124,7 +163,7 @@ tr:hover {
     color: white;
 }
 
-/* --- Theme Toggle --- */
+/* --- Theme Toggle Switch --- */
 .theme-toggle {
     display: flex;
     justify-content: flex-end;
@@ -180,6 +219,9 @@ input:checked + .slider:before {
     border-radius: 50%;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* --- Modal Styles --- */
@@ -217,6 +259,7 @@ input:checked + .slider:before {
     margin-top: 25px;
 }
 
+/* --- Dark Mode Styles --- */
 body.dark {
     background: #111827;
     color: #F9FAFB;
@@ -249,7 +292,22 @@ body.dark .modal-content {
     color: #F9FAFB;
 }
 
-/* Responsive Styles */
+/* --- Dark Mode Stat Cards Fix --- */
+body.dark .stat-card {
+    background: #1F2937;
+    color: #F9FAFB;
+    box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+body.dark .stat-label {
+    color: #9CA3AF;
+}
+
+body.dark .stat-value {
+    color: #F9FAFB;
+}
+
+/* --- Responsive Styles --- */
 @media (max-width: 600px) {
     .container {
         padding: 20px;
@@ -264,13 +322,18 @@ body.dark .modal-content {
         font-size: 18px;
     }
 
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat-card {
+        flex: 1 1 100%;
+    }
+
     input, button {
         padding: 12px;
         font-size: 14px;
-    }
-
-    .result {
-        font-size: 1.2em;
     }
 
     .button-group {

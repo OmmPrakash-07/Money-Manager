@@ -222,13 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const exportContent = document.getElementById("exportContent");
 
-        html2pdf()
-            .from(exportContent)
-            .save()
-            .then(() => {
-                elementsToHide.forEach(el => el.style.display = "");
-                pdfHideElements.forEach(el => el.style.display = "");
-            });
+        const opt = {
+            margin:       0.5,
+            filename:     'Money-Manager.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(exportContent).save().then(() => {
+            elementsToHide.forEach(el => el.style.display = "");
+            pdfHideElements.forEach(el => el.style.display = "");
+        });
     });
 
     resetBtn.addEventListener("click", () => {

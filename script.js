@@ -1,7 +1,6 @@
 // Money Manager Script with Negative Balance Support
 
 // DOM Elements
-const totalMoneyInput = document.getElementById("totalMoney");
 const spendMoneyInput = document.getElementById("spendMoney");
 const descriptionInput = document.getElementById("description");
 const addBtn = document.getElementById("addBtn");

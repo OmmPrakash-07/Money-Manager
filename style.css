@@ -1,0 +1,572 @@
+/* --- Base Styles --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F4F7FA;
+    color: #111827;
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* --- Container --- */
+.container {
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    margin: 40px auto;
+    max-width: 960px;
+    width: 90%;
+}
+
+/* --- Headers --- */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+h3 {
+    text-align: center;
+    font-size: 20px;
+    color: #10B981;
+    margin-top: 25px;
+}
+
+/* --- Stats Cards --- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.stat-card {
+    flex: unset;
+    background: #F9FAFB;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* --- Specific Stat Colors --- */
+.stat-total    { border-top: 4px solid #3B82F6; }
+.stat-remaining{ border-top: 4px solid #10B981; }
+.stat-spent    { border-top: 4px solid #EF4444; }
+
+/* --- Expense Entry Section --- */
+.expense-entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.expense-entry input[type="number"] {
+    grid-column: 1 / 2;
+    margin: 0;
+}
+
+.expense-entry input[type="text"] {
+    grid-column: 2 / 3;
+    margin: 0;
+}
+
+.expense-entry select {
+    grid-column: 3 / 4;
+    margin: 0;
+}
+
+.expense-entry button {
+    grid-column: 4 / 5;
+    margin: 0;
+    width: auto;
+    white-space: nowrap;
+    padding: 14px 22px;
+}
+
+/* --- Inputs & Buttons (base) --- */
+input, button, select {
+    font-family: inherit;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #22C55E, #10B981);
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.95;
+}
+
+/* --- Category Dropdown --- */
+#categorySelect,
+#editCategorySelect {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    appearance: auto;
+}
+
+body.dark #categorySelect,
+body.dark #editCategorySelect {
+    background-color: #374151;
+    border-color: #4B5563;
+    color: #F9FAFB;
+}
+
+/* --- Category Filter Bar --- */
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 14px 0 4px;
+}
+
+.category-filter > span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 2px;
+    white-space: nowrap;
+}
+
+.filter-btn {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #E5E7EB;
+    background: #F9FAFB;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    width: auto;
+    transition: all 0.2s ease;
+    line-height: 1.4;
+}
+
+.filter-btn:hover {
+    background: #ECFDF5;
+    border-color: #10B981;
+    color: #10B981;
+}
+
+.filter-btn.active {
+    background: #10B981;
+    color: #fff;
+    border-color: #10B981;
+    font-weight: 600;
+}
+
+body.dark .filter-btn {
+    background: #374151;
+    border-color: #4B5563;
+    color: #F9FAFB;
+}
+
+body.dark .filter-btn:hover {
+    background: #065F46;
+    border-color: #10B981;
+}
+
+body.dark .filter-btn.active {
+    background: #10B981;
+    border-color: #10B981;
+    color: #fff;
+}
+
+body.dark .category-filter > span {
+    color: #9CA3AF;
+}
+
+/* --- Category Badge in Table --- */
+.category-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background-color: #ECFDF5;
+    color: #065F46;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+body.dark .category-badge {
+    background-color: #064E3B;
+    color: #6EE7B7;
+}
+
+/* --- Table Styling --- */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+    border-radius: 15px;
+    background: #F9FAFB;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th {
+    background: #10B981;
+    color: white;
+    font-weight: 500;
+}
+
+td, th {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+tr:hover {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* --- Action Buttons --- */
+.action-btn {
+    padding: 6px 14px;
+    font-size: 0.85em;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 3px;
+    width: auto;
+}
+
+.edit-btn   { background: #3B82F6; color: white; }
+.delete-btn { background: #EF4444; color: white; }
+
+/* --- Theme Toggle Switch --- */
+.theme-toggle {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 24px;
+}
+
+.switch input { display: none; }
+
+.slider {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #D1D5DB;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background: #10B981; }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* --- Floating Add Button --- */
+.fab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    background: linear-gradient(135deg, #22C55E, #10B981);
+    color: white;
+    border-radius: 50%;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    width: 60px; /* override global button width:100% */
+}
+
+/* --- Modal Styles --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: #ffffff;
+    margin: 20% auto;
+    padding: 25px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content button {
+    margin: 8px 0;
+}
+
+.close-btn, .edit-close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* --- Buttons Group --- */
+.button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.button-group button {
+    flex: 1;
+    margin: 0;
+}
+
+/* --- Search Input --- */
+#searchInput {
+    margin-top: 14px;
+}
+
+/* --- Dark Mode Styles --- */
+body.dark {
+    background: #111827;
+    color: #F9FAFB;
+}
+
+body.dark .container {
+    background: #1F2937;
+}
+
+body.dark input,
+body.dark select {
+    background: #374151;
+    color: #F9FAFB;
+    border-color: #4B5563;
+}
+
+body.dark button {
+    background: linear-gradient(135deg, #22C55E, #10B981);
+    color: #fff;
+    border-color: transparent;
+}
+
+body.dark .edit-btn   { background: #3B82F6; }
+body.dark .delete-btn { background: #EF4444; }
+
+body.dark table { background: #1F2937; }
+body.dark th    { background: #10B981; }
+body.dark td    { background: #374151; border-color: #4B5563; }
+
+body.dark .modal-content {
+    background: #374151;
+    color: #F9FAFB;
+}
+
+body.dark .stat-card {
+    background: #1F2937;
+    color: #F9FAFB;
+    box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+body.dark .stat-label { color: #9CA3AF; }
+body.dark .stat-value { color: #F9FAFB; }
+
+body.dark .table-wrapper { background: #1F2937; }
+
+/* --- Responsive Styles --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        width: auto;
+        border-radius: 14px;
+    }
+
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+
+    /* Stats stack on mobile */
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    /* Expense entry stacks on mobile */
+    .expense-entry {
+        grid-template-columns: 1fr;
+    }
+
+    .expense-entry input[type="number"],
+    .expense-entry input[type="text"],
+    .expense-entry select,
+    .expense-entry button {
+        grid-column: 1 / 2;
+        width: 100%;
+    }
+
+    input, button, select {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .fab {
+        width: 55px !important;
+        height: 55px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table { min-width: 500px; }
+
+    .modal-content {
+        width: 90%;
+        margin: 40% auto;
+        padding: 20px;
+    }
+
+    .close-btn, .edit-close-btn { font-size: 20px; }
+}
+
+/* --- Logout Button --- */
+.logout-section {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.logout-btn {
+    background: #e63946;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+    width: 100%;
+}
+
+.logout-btn:hover {
+    background: #c71c30;
+    transform: scale(1.05);
+}
+
+body.dark .logout-btn       { background: #ef4444; color: #fff; }
+body.dark .logout-btn:hover { background: #dc2626; }
+
+
+/* Action Buttons Container */
+.action-btn {
+    border: none;
+    padding: 6px 12px;
+    margin: 2px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/* ✏️ Edit Button */
+.edit-btn {
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: white;
+}
+
+.edit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+}
+
+/* 🗑️ Delete Button */
+.delete-btn {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    color: white;
+}
+
+.delete-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive (mobile) */
+@media (max-width: 600px) {
+    .action-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+}

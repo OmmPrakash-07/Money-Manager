@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Money Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Login 🔑</h2>
+
+    <div class="expense-entry">
+      <input type="text" id="username" placeholder="Enter Username">
+      
+      <div style="position: relative;">
+        <input type="password" id="password" placeholder="Enter Password">
+        <span id="togglePassword" style="
+          position:absolute;
+          right:10px;
+          top:50%;
+          transform:translateY(-50%);
+          cursor:pointer;
+          font-size:14px;
+          color:gray;">
+          👁️
+        </span>
+      </div>
+
+      <button id="loginBtn">Login</button>
+    </div>
+
+    <p style="text-align:center; color:gray;">Demo: user / 1234</p>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById("loginBtn");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    // 🔐 Login Function
+    function handleLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = passwordInput.value.trim();
+
+      if (!user || !pass) {
+        alert("Please enter username and password!");
+        return;
+      }
+
+      // Demo login
+      if (user === "user" && pass === "1234") {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid credentials! Try user / 1234");
+      }
+    }
+
+    // Click login
+    loginBtn.addEventListener("click", handleLogin);
+
+    // Press Enter to login
+    document.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleLogin();
+      }
+    });
+
+    // 👁️ Show/Hide Password
+    togglePassword.addEventListener("click", () => {
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+    });
+  </script>
+
+</body>
+</html>

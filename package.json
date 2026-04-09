@@ -1,0 +1,16 @@
+{
+  "name": "money-manager",
+  "version": "1.0.0",
+  "description": "A PWA + Electron app to track daily expenses, manage budgets, and export to PDF.",
+  "main": "electron.js",
+  "scripts": {
+    "start": "electron electron.js",
+    "web": "npx serve ."
+  },
+  "keywords": ["money", "expense", "tracker", "pwa", "electron"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^38.0.0"
+  }
+}

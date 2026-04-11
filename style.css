@@ -570,3 +570,140 @@ body.dark .logout-btn:hover { background: #dc2626; }
         font-size: 11px;
     }
 }
+
+/* 📊 Chart Section */
+.chart-container {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.chart-container h3 {
+    margin-bottom: 15px;
+}
+
+canvas {
+    max-width: 100%;
+}
+
+/* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+/* Modal Content */
+.modal-content {
+    background: #1e293b;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    color: white;
+    text-align: center;
+}
+
+/* Close Button */
+.close-chart {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Theme Toggle Container */
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 22px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background: #ccc;
+    border-radius: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* Active */
+input:checked + .slider {
+    background: #3b82f6;
+}
+
+input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+/* Theme Box */
+.theme-box {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    background: #1e293b;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Icon */
+#themeIcon {
+    font-size: 20px;
+    transition: 0.3s ease;
+}
+
+/* Hover Effect */
+.theme-box:hover {
+    transform: scale(1.1);
+}
+
+/* Light Mode Adjustment */
+body:not(.dark) .theme-box {
+    background: #f1f5f9;
+    color: black;
+}

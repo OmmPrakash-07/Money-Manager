@@ -14,11 +14,8 @@
     <div class="container">
 
         <!-- Theme Switcher -->
-        <div class="theme-toggle">
-            <label class="switch">
-                <input type="checkbox" id="themeSwitcher">
-                <span class="slider"></span>
-            </label>
+        <div class="theme-box">
+            <span id="themeIcon">🌙</span>
         </div>
 
         <h2>Money Manager 💰</h2>
@@ -44,6 +41,9 @@
                 <option value="📦 Other">📦 Other</option>
             </select>
             <button id="addBtn">Add Expense</button>
+            <button onclick="window.location.href='chart.html'">
+                📊 View Monthly Chart
+            </button>
         </div>
 
         <!-- Category Filter (NEW) -->
@@ -161,5 +161,7 @@
     <!-- Scripts -->
     <script src="html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
+
 </html>

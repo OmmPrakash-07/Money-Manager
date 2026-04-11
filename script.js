@@ -1,9 +1,14 @@
 // Money Manager Script with Negative Balance Support + Category Feature
 
+// 🔐 Login Protection
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+}
+
 // DOM Elements
 const spendMoneyInput = document.getElementById("spendMoney");
 const descriptionInput = document.getElementById("description");
-const categorySelect = document.getElementById("categorySelect");         // NEW
+const categorySelect = document.getElementById("categorySelect");
 const addBtn = document.getElementById("addBtn");
 const totalMoneyText = document.getElementById("totalMoneyText");
 const resultText = document.getElementById("resultText");
@@ -17,7 +22,7 @@ const closeAddMoneyModal = document.querySelector(".close-btn");
 const editExpenseModal = document.getElementById("editExpenseModal");
 const editDescriptionInput = document.getElementById("editDescriptionInput");
 const editSpentInput = document.getElementById("editSpentInput");
-const editCategorySelect = document.getElementById("editCategorySelect"); // NEW
+const editCategorySelect = document.getElementById("editCategorySelect");
 const saveEditBtn = document.getElementById("saveEditBtn");
 const closeEditExpenseModal = document.querySelector(".edit-close-btn");
 const searchInput = document.getElementById("searchInput");
@@ -27,14 +32,9 @@ const resetBtn = document.getElementById("resetBtn");
 let totalMoney = 0;
 let expenses = [];
 let editingIndex = null;
-let activeFilter = "all"; // NEW — tracks current category filter
+let activeFilter = "all";
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
-
-// 🔐 Login Protection
-if (localStorage.getItem("isLoggedIn") !== "true") {
-    window.location.href = "login.html";
-}
+// ─── Helpers ─────────────────────────────────────────
 
 function calculateTotalSpent() {
     return expenses.reduce((acc, expense) => acc + expense.spent, 0);
@@ -54,7 +54,7 @@ function updateDashboard() {
     resultText.style.color = remaining < 0 ? 'red' : '';
 }
 
-// ─── Render Table ──────────────────────────────────────────────────────────
+// ─── Render Table ─────────────────────────────────────
 
 function renderExpenseTable(filterCategory = "all", searchTerm = "") {
     expenseTable.innerHTML = "";
@@ -64,10 +64,7 @@ function renderExpenseTable(filterCategory = "all", searchTerm = "") {
     expenses.forEach((expense, index) => {
         runningRemaining -= expense.spent;
 
-        // Apply category filter
         if (filterCategory !== "all" && expense.category !== filterCategory) return;
-
-        // Apply search filter
         if (searchTerm && !expense.description.toLowerCase().includes(searchTerm)) return;
 
         const row = expenseTable.insertRow();
@@ -91,7 +88,7 @@ function updateAllDisplays() {
     renderExpenseTable(activeFilter, searchInput.value.toLowerCase().trim());
 }
 
-// ─── LocalStorage ──────────────────────────────────────────────────────────
+// ─── LocalStorage ─────────────────────────────────────
 
 function saveToLocalStorage() {
     localStorage.setItem("totalMoney", totalMoney);
@@ -101,17 +98,19 @@ function saveToLocalStorage() {
 function loadFromLocalStorage() {
     const savedTotalMoney = localStorage.getItem("totalMoney");
     const savedExpenses = localStorage.getItem("expenses");
+
     if (savedTotalMoney) totalMoney = parseFloat(savedTotalMoney);
     if (savedExpenses) expenses = JSON.parse(savedExpenses);
+
     updateAllDisplays();
 }
 
-// ─── Add Expense ───────────────────────────────────────────────────────────
+// ─── Add Expense ──────────────────────────────────────
 
 addBtn.addEventListener("click", () => {
     const spendAmount = parseFloat(spendMoneyInput.value);
     const description = descriptionInput.value.trim();
-    const category = categorySelect.value || "📦 Other"; // NEW
+    const category = categorySelect.value || "📦 Other";
 
     if (isNaN(spendAmount) || spendAmount <= 0 || !description) {
         alert("Please enter valid spend amount and description.");
@@ -121,7 +120,7 @@ addBtn.addEventListener("click", () => {
     expenses.push({
         date: new Date().toLocaleString(),
         description,
-        category, // NEW
+        category,
         spent: spendAmount
     });
 
@@ -130,10 +129,10 @@ addBtn.addEventListener("click", () => {
 
     spendMoneyInput.value = "";
     descriptionInput.value = "";
-    categorySelect.value = ""; // NEW — reset dropdown
+    categorySelect.value = "";
 });
 
-// ─── Add Money Modal ───────────────────────────────────────────────────────
+// ─── Add Money Modal ──────────────────────────────────
 
 modalAddMoneyBtn.addEventListener("click", () => {
     const addAmount = parseFloat(modalAddMoneyInput.value);
@@ -159,15 +158,17 @@ closeAddMoneyModal.addEventListener("click", () => {
     addMoneyModal.style.display = "none";
 });
 
-// ─── Edit / Delete ─────────────────────────────────────────────────────────
+// ─── Edit / Delete ────────────────────────────────────
 
 expenseTable.addEventListener("click", (e) => {
     if (e.target.classList.contains("edit-btn")) {
         editingIndex = parseInt(e.target.dataset.index);
         const expense = expenses[editingIndex];
+
         editDescriptionInput.value = expense.description;
         editSpentInput.value = expense.spent;
-        editCategorySelect.value = expense.category || ""; // NEW — pre-fill category
+        editCategorySelect.value = expense.category || "";
+
         editExpenseModal.style.display = "block";
     } else if (e.target.classList.contains("delete-btn")) {
         const index = parseInt(e.target.dataset.index);
@@ -180,7 +181,7 @@ expenseTable.addEventListener("click", (e) => {
 saveEditBtn.addEventListener("click", () => {
     const newDescription = editDescriptionInput.value.trim();
     const newSpent = parseFloat(editSpentInput.value);
-    const newCategory = editCategorySelect.value || "📦 Other"; // NEW
+    const newCategory = editCategorySelect.value || "📦 Other";
 
     if (!newDescription || isNaN(newSpent) || newSpent <= 0) {
         alert("Please enter valid description and amount.");
@@ -189,7 +190,7 @@ saveEditBtn.addEventListener("click", () => {
 
     expenses[editingIndex].description = newDescription;
     expenses[editingIndex].spent = newSpent;
-    expenses[editingIndex].category = newCategory; // NEW
+    expenses[editingIndex].category = newCategory;
 
     updateAllDisplays();
     editExpenseModal.style.display = "none";
@@ -200,7 +201,7 @@ closeEditExpenseModal.addEventListener("click", () => {
     editExpenseModal.style.display = "none";
 });
 
-// ─── Category Filter Buttons (NEW) ─────────────────────────────────────────
+// ─── Filters ──────────────────────────────────────────
 
 document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -211,18 +212,17 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     });
 });
 
-// ─── Search ────────────────────────────────────────────────────────────────
+// ─── Search ───────────────────────────────────────────
 
 searchInput.addEventListener("input", () => {
     renderExpenseTable(activeFilter, searchInput.value.toLowerCase().trim());
 });
 
-// ─── Export PDF ────────────────────────────────────────────────────────────
+// ─── Export PDF ───────────────────────────────────────
 
 exportPdfBtn.addEventListener("click", () => {
     const elementsToHide = document.querySelectorAll(".pdf-hide, .no-print");
 
-    // Hide unwanted elements
     elementsToHide.forEach(el => el.style.display = "none");
 
     const element = document.getElementById("exportContent");
@@ -231,53 +231,59 @@ exportPdfBtn.addEventListener("click", () => {
         margin: 0.5,
         filename: 'Expense_History.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-            scale: 2,
-            scrollY: 0
-        },
-        jsPDF: {
-            unit: 'in',
-            format: 'a4',
-            orientation: 'portrait'
-        }
+        html2canvas: { scale: 2, scrollY: 0 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
-        // Restore elements after PDF
         elementsToHide.forEach(el => el.style.display = "");
     });
 });
 
-// ─── Reset ─────────────────────────────────────────────────────────────────
+// ─── Reset ────────────────────────────────────────────
 
 resetBtn.addEventListener("click", () => {
     if (confirm("Are you sure you want to reset all data?")) {
         totalMoney = 0;
         expenses = [];
-        activeFilter = "all"; // NEW — reset filter too
+        activeFilter = "all";
+
         document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
         document.querySelector('.filter-btn[data-category="all"]').classList.add("active");
+
         updateAllDisplays();
         saveToLocalStorage();
     }
 });
 
-// ─── Theme Toggle ──────────────────────────────────────────────────────────
+// ─── Theme ────────────────────────────────────────────
 
-const themeSwitcher = document.getElementById("themeSwitcher");
-themeSwitcher.addEventListener("change", () => {
-    document.body.classList.toggle("dark", themeSwitcher.checked);
-    localStorage.setItem("theme", themeSwitcher.checked ? "dark" : "light");
+const themeBox = document.querySelector(".theme-box");
+const themeIcon = document.getElementById("themeIcon");
+
+function setTheme(isDark) {
+    document.body.classList.toggle("dark", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    themeIcon.textContent = isDark ? "🌙" : "☀️";
+}
+
+// Click on box
+themeBox.addEventListener("click", () => {
+    const isDark = !document.body.classList.contains("dark");
+    setTheme(isDark);
 });
 
-// ─── Load on Start ─────────────────────────────────────────────────────────
+// ─── Load ─────────────────────────────────────────────
 
 window.addEventListener("load", () => {
     const savedTheme = localStorage.getItem("theme");
+
     if (savedTheme === "dark") {
-        document.body.classList.add("dark");
-        themeSwitcher.checked = true;
+        setTheme(true);
+    } else {
+        setTheme(false);
     }
+
     loadFromLocalStorage();
 });
 

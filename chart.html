@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Chart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h2 style="text-align:center;">📊 Monthly Spending Chart</h2>
+
+    <div class="chart-container">
+        <canvas id="expenseChart"></canvas>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+        <button onclick="window.location.href='index.html'">⬅ Back</button>
+    </div>
+
+    <script>
+        let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+        const monthlyData = {};
+
+        expenses.forEach(exp => {
+            const date = new Date(exp.date);
+            const month = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+
+            if (!monthlyData[month]) {
+                monthlyData[month] = 0;
+            }
+
+            monthlyData[month] += exp.spent;
+        });
+
+        const labels = Object.keys(monthlyData);
+        const data = Object.values(monthlyData);
+
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Spending',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: 'white' }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: 'white' } },
+                    y: { ticks: { color: 'white' } }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
